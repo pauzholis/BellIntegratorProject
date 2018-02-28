@@ -1,9 +1,9 @@
-package ru.bellintegrator.practice.dao.impl;
+package ru.bellintegrator.practice.organization.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.dao.PersonDAO;
-import ru.bellintegrator.practice.model.Person;
+import ru.bellintegrator.practice.organization.dao.PersonDAO;
+import ru.bellintegrator.practice.organization.model.Person;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
