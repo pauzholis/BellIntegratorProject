@@ -182,6 +182,16 @@ CREATE INDEX IX_User_Second_Name
   ON User (second_name);
 CREATE INDEX IX_User_Phone
   ON User (phone);
+CREATE INDEX IX_User_Doc_Id
+  ON User (doc_id);
+CREATE INDEX IX_User_Office_Id
+  ON User (office_id);
+CREATE INDEX IX_User_Citizenship_Id
+  ON User (citizenship_id);
+CREATE INDEX IX_User_Activation_User_Id
+  ON User_Activation (user_id);
+CREATE INDEX IX_Document_Doc_Type_Id
+  ON Document (doc_type_id);
 ALTER TABLE Office
   ADD FOREIGN KEY (organization_id) REFERENCES Organization (id);
 ALTER TABLE User
