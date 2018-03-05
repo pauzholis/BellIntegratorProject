@@ -1,8 +1,21 @@
-package ru.bellintegrator.practice.dictionary.model;
+package ru.bellintegrator.practice.user.model;
 
-import ru.bellintegrator.practice.user.model.*;
-import javax.persistence.*;
-import java.util.*;
+import ru.bellintegrator.practice.dictionary.model.DocType;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+import java.util.Date;
 
 /**
  * Документ
@@ -68,24 +81,12 @@ public class Document {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public DocType getDocType() {
         return docType;
     }
 
     public void setDocType(DocType docType) {
         this.docType = docType;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Integer getNumber() {

@@ -1,6 +1,14 @@
 package ru.bellintegrator.practice.registration.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Сообщение пользователю
@@ -54,10 +62,6 @@ public class Notification {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Channel getChannel() {
         return channel;
     }
@@ -80,13 +84,5 @@ public class Notification {
 
     public void setMassage(String massage) {
         this.massage = massage;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 }

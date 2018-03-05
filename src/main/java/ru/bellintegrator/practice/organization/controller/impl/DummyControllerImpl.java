@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.organization.controller.DummyController;
 import ru.bellintegrator.practice.organization.service.DummyService;
 import ru.bellintegrator.practice.organization.view.PersonView;
-
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;

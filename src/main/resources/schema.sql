@@ -10,13 +10,13 @@ CREATE TABLE IF NOT EXISTS Organization (
   COMMENT 'Сокращенное наименование организации',
   full_name VARCHAR(255) NOT NULL
   COMMENT 'Полное наименование организации',
-  inn       NUMERIC(10) UNSIGNED UNIQUE
+  inn       VARCHAR(255) UNIQUE
   COMMENT 'ИНН организации',
-  kpp       NUMERIC(9) UNSIGNED
+  kpp       VARCHAR(255)
   COMMENT 'КПП организации',
   address   VARCHAR(255)
   COMMENT 'Адрес организации',
-  phone     INTEGER
+  phone     VARCHAR(255)
   COMMENT 'Телефон организации',
   isActive  BOOLEAN
   COMMENT 'Статус активности организации'
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Office (
   COMMENT 'Идентификатор организации',
   name            VARCHAR(255) NOT NULL
   COMMENT 'Наименование оффиса',
-  phone           INTEGER
+  phone           VARCHAR(255)
   COMMENT 'Телефон оффиса',
   isActive        BOOLEAN
   COMMENT 'Статус активности оффиса'
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS User (
   COMMENT 'Отчество пользователя',
   position       VARCHAR(255)
   COMMENT 'Должность пользователя',
-  phone          INTEGER
+  phone          VARCHAR(255)
   COMMENT 'Номер телефона пользователя',
   isIdentified   BOOLEAN
   COMMENT 'Статус идентификации пользователя'
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS Doc_Type (
   COMMENT 'Идентификатор типа документа',
   version INTEGER      NOT NULL
   COMMENT 'Служебное поле Hibernate',
-  code    INTEGER
+  code    VARCHAR(255)
   COMMENT 'Код документа',
   name    VARCHAR(255) NOT NULL
   COMMENT 'Наименование документа'
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS Citizenship (
   COMMENT 'Идентификатор записи',
   version INTEGER      NOT NULL
   COMMENT 'Служебное поле Hibernate',
-  code    INTEGER
+  code    VARCHAR(255)
   COMMENT 'Код общероссийского класификатора стран мира',
   name    VARCHAR(255) NOT NULL
   COMMENT 'Наименование страны'

@@ -1,10 +1,21 @@
 package ru.bellintegrator.practice.user.model;
 
-import ru.bellintegrator.practice.dictionary.model.*;
-import ru.bellintegrator.practice.office.model.*;
-import ru.bellintegrator.practice.registration.model.*;
-
-import javax.persistence.*;
+import ru.bellintegrator.practice.dictionary.model.Citizenship;
+import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.registration.model.UserActivation;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Пользователь
@@ -43,7 +54,7 @@ public class User {
     private Integer version;
 
     /**
-     * Идентификатор оффиса
+     * Оффис
      */
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "office_id")
@@ -115,10 +126,6 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Document getDocument() {
         return document;
     }
@@ -133,14 +140,6 @@ public class User {
 
     public void setCitizenship(Citizenship citizenship) {
         this.citizenship = citizenship;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Office getOffice() {

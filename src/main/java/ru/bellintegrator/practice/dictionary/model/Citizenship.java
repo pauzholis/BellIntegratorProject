@@ -1,8 +1,16 @@
 package ru.bellintegrator.practice.dictionary.model;
 
-import ru.bellintegrator.practice.user.model.*;
-
-import javax.persistence.*;
+import ru.bellintegrator.practice.user.model.User;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * Гражданство
@@ -53,18 +61,6 @@ public class Citizenship {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Integer getCode() {
