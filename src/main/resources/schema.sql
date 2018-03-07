@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Organization (
   COMMENT 'Адрес организации',
   phone     VARCHAR(255)
   COMMENT 'Телефон организации',
-  isActive  BOOLEAN
+  is_active  BOOLEAN
   COMMENT 'Статус активности организации'
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Office (
   COMMENT 'Наименование оффиса',
   phone           VARCHAR(255)
   COMMENT 'Телефон оффиса',
-  isActive        BOOLEAN
+  is_active        BOOLEAN
   COMMENT 'Статус активности оффиса'
 );
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS User (
   COMMENT 'Должность пользователя',
   phone          VARCHAR(255)
   COMMENT 'Номер телефона пользователя',
-  isIdentified   BOOLEAN
+  is_identified   BOOLEAN
   COMMENT 'Статус идентификации пользователя'
 );
 

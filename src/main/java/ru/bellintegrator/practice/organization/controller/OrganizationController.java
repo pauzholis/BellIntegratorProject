@@ -1,39 +1,50 @@
 package ru.bellintegrator.practice.organization.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.bellintegrator.practice.organization.view.PersonView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.bellintegrator.practice.organization.view.OrganizationListRequestView;
+import ru.bellintegrator.practice.organization.view.OrganizationListResultView;
+import ru.bellintegrator.practice.organization.view.OrganizationResultView;
+import ru.bellintegrator.practice.organization.view.OrganizationUpdateRequestView;
+import ru.bellintegrator.practice.organization.view.OrganizationUpdateResultView;
+import ru.bellintegrator.practice.registration.view.LoginRequestView;
+import ru.bellintegrator.practice.registration.view.LoginResultView;
 
-import java.util.List;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-public interface OrganizationController{
+@RestController
+@RequestMapping(value = "/api/organization", produces = APPLICATION_JSON_VALUE)
+public class OrganizationController {
+    @RequestMapping("/{id}")
+    public OrganizationResultView organization (){
+        OrganizationResultView response = new OrganizationResultView();
+        response.isActive = true;
+        return response;
+    }
+
     /**
-     * Dummy controller
-     * Just for testing
+     * Ответ на запрос по списку организаций
      */
-    String ping();
+    @RequestMapping(value = "/list", method = {POST})
+    public OrganizationListResultView list(
+            @RequestBody
+                    OrganizationListRequestView organizationListRequestView) {
+        OrganizationListResultView response = new OrganizationListResultView();
+        response.isActive = true;
+        return response;
+    }
+
     /**
-     * Get all organizations
-     * @return JSON organizations value
+     * Входные данные запроса на обновление организации
      */
-    List<OrganizationView> organizations();
+    @RequestMapping(value = "/update", method = {POST})
+    public OrganizationUpdateResultView update(
+            @RequestBody
+                    OrganizationUpdateRequestView updateData) {
+        OrganizationUpdateResultView response = new OrganizationUpdateResultView();
+        response.result = "success";
+        return response;
+    }
 }
-
-//public interface DummyController {
-//    /**
-//     * Dummy controller
-//     * Just for testing
-//     */
-//    String ping();
-//
-//    /**
-//     * Add person
-//     * @param person
-//     */
-//    void person(@RequestBody PersonView person);
-//
-//    /**
-//     * Get all persons
-//     * @return JSON persons value
-//     */
-//    List<PersonView> persons();
-//}
