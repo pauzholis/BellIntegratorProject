@@ -9,6 +9,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+/**
+ * {@inheritDoc}
+ */
 public class DigestServiceImpl implements DigestService {
     private static final Logger log = LoggerFactory.getLogger(DigestServiceImpl.class);
 

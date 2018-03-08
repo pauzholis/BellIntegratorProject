@@ -1,5 +1,8 @@
 package ru.bellintegrator.practice.registration.service;
 
+/**
+ * Сервис для работы с регистрацией пользователя
+ */
 public interface RegistrationDataService {
 
     /**

@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.office.model;
 
 import ru.bellintegrator.practice.organization.model.Organization;
 import ru.bellintegrator.practice.user.model.User;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,13 +45,6 @@ public class Office {
     private String address;
 
     /**
-     * Идентификатор организации
-     */
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "organization_id")
-    private Organization organization;
-
-    /**
      * Наименование оффиса
      */
     @Column(name = "name")
@@ -69,6 +63,13 @@ public class Office {
     private Boolean isActive;
 
     /**
+     * Идентификатор организации
+     */
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization_id")
+    private Organization organization;
+
+    /**
      * Список пользователей оффиса
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Office", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -80,7 +81,7 @@ public class Office {
     public Office() {
     }
 
-    public Office(String address, Organization organization, String name,Integer phone, Boolean isActive) {
+    public Office(String address, Organization organization, String name, Integer phone, Boolean isActive) {
         this.address = address;
         this.organization = organization;
         this.name = name;

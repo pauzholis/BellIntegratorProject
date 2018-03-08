@@ -1,8 +1,9 @@
 package ru.bellintegrator.practice.user.model;
 
-import ru.bellintegrator.practice.dictionary.model.Citizenship;
+import ru.bellintegrator.practice.dictionary.model.Country;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.registration.model.UserActivation;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,33 +33,10 @@ public class User {
     private Long id;
 
     /**
-     *  Документ пользователя
-     */
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_id")
-    private Document document;
-
-    /**
-     * Запись о гражданстве
-     */
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "citizenship_id")
-    private Citizenship citizenship;
-
-    /**
      * Служебное поле hibernate
      */
     @Version
     private Integer version;
-
-    /**
-     * Оффис
-     */
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "office_id")
-    private Office office;
 
     /**
      * Имя пользователя
@@ -97,10 +75,33 @@ public class User {
     private Boolean isIdentified;
 
     /**
-     * Акцивация пользователя
+     * Активация пользователя
      */
     @OneToOne(mappedBy = "User", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserActivation userActivation;
+
+    /**
+     * Документ пользователя
+     */
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_id")
+    private Document document;
+
+    /**
+     * Запись о гражданстве
+     */
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "citizenship_id")
+    private Country country;
+
+    /**
+     * Оффис
+     */
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "office_id")
+    private Office office;
 
     /**
      * Конструктор для hibernate
@@ -108,10 +109,10 @@ public class User {
     public User() {
     }
 
-    public User(Document document, Citizenship citizenship, Office office, String firstName, String secondName,
+    public User(Document document, Country country, Office office, String firstName, String secondName,
                 String middleName, String position, Integer phone, Boolean isIdentified, UserActivation userActivation) {
         this.document = document;
-        this.citizenship = citizenship;
+        this.country = country;
         this.office = office;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -134,12 +135,12 @@ public class User {
         this.document = document;
     }
 
-    public Citizenship getCitizenship() {
-        return citizenship;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCitizenship(Citizenship citizenship) {
-        this.citizenship = citizenship;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public Office getOffice() {

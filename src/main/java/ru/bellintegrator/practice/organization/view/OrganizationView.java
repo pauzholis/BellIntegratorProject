@@ -1,15 +1,16 @@
 package ru.bellintegrator.practice.organization.view;
 
 /**
- * Входные данные запроса на обновление организации
+ * Отображение параметров организации
  */
-public class OrganizationUpdateRequestView {
+public class OrganizationView {
     public long id;
     public String name;
     public String fullName;
     public String inn;
     public String kpp;
     public String address;
-    public int phone;
+    public String phone;
     public boolean isActive;
+    public String result;
 }

@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.organization.model;
 
 import ru.bellintegrator.practice.office.model.Office;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Organization")
 public class Organization {
+
     /**
      * Идентификатор организации
      */

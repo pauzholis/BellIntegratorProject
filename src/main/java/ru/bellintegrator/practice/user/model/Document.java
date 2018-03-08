@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.user.model;
 
 import ru.bellintegrator.practice.dictionary.model.DocType;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,14 +33,6 @@ public class Document {
     private Long id;
 
     /**
-     * Идентификатор типа документа
-     */
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doc_type_id")
-    private DocType docType;
-
-    /**
      * Служебное поле hibernate
      */
     @Version
@@ -63,6 +56,14 @@ public class Document {
      */
     @OneToOne(mappedBy = "Document", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
+
+    /**
+     * Идентификатор типа документа
+     */
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doc_type_id")
+    private DocType docType;
 
     /**
      * Конструктор для hibernate

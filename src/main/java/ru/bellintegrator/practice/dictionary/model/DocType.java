@@ -1,14 +1,12 @@
 package ru.bellintegrator.practice.dictionary.model;
 
 import ru.bellintegrator.practice.user.model.Document;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -18,6 +16,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "Doc_Type")
 public class DocType {
+
     /**
      * Идентификатор документа
      */
@@ -45,12 +44,6 @@ public class DocType {
     private String name;
 
     /**
-     * Документ
-     */
-    @OneToOne(mappedBy = "Doc_Type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Document document;
-
-    /**
      * Конструктор для hibernate
      */
     public DocType() {
@@ -59,7 +52,6 @@ public class DocType {
     public DocType(Integer code, String name, Document document) {
         this.code = code;
         this.name = name;
-        this.document = document;
     }
 
     public Long getId() {
@@ -80,13 +72,5 @@ public class DocType {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(Document document) {
-        this.document = document;
     }
 }

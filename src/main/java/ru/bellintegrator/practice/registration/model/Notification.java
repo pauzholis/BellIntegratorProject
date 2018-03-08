@@ -25,6 +25,12 @@ public class Notification {
     private Long id;
 
     /**
+     * Служебное поле hibernate
+     */
+    @Version
+    private Integer version;
+
+    /**
      * Канал, посредством которого осуществляется передача сообщения
      */
     @Enumerated(EnumType.STRING)
@@ -42,12 +48,6 @@ public class Notification {
      */
     @Column(name = "massage")
     private String massage;
-
-    /**
-     * Служебное поле hibernate
-     */
-    @Version
-    private Integer version;
 
     public Notification() {
     }

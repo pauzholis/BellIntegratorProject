@@ -1,12 +1,15 @@
 package ru.bellintegrator.practice.registration.service.impl;
 
-
 import org.springframework.stereotype.Service;
 import ru.bellintegrator.practice.registration.service.UserActivationService;
 
 import java.util.UUID;
+
+/**
+ * {@inheritDoc}
+ */
 @Service
-public class UserActivationServiceImpl implements UserActivationService{
+public class UserActivationServiceImpl implements UserActivationService {
 
     /**
      * Генерация кода активации

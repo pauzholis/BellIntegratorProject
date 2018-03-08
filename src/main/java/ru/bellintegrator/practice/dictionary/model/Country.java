@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.dictionary.model;
 
 import ru.bellintegrator.practice.user.model.User;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,9 @@ import javax.persistence.Version;
  * Гражданство
  */
 @Entity
-@Table(name = "Citizenship")
-public class Citizenship {
+@Table(name = "Country")
+public class Country {
+
     /**
      * Идентификатор записи
      */
@@ -47,13 +49,13 @@ public class Citizenship {
     /**
      * Пользователь
      */
-    @OneToOne(mappedBy = "Citizenship", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "Country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 
-    public Citizenship() {
+    public Country() {
     }
 
-    public Citizenship(Integer code, String name, User user) {
+    public Country(Integer code, String name, User user) {
         this.code = code;
         this.name = name;
         this.user = user;

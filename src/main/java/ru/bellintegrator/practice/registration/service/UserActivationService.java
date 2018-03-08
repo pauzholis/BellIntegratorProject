@@ -1,6 +1,8 @@
 package ru.bellintegrator.practice.registration.service;
 
-
+/**
+ * Сервис для работы с активацией
+ */
 public interface UserActivationService {
 
     /**

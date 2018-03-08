@@ -26,7 +26,6 @@ public class RegistrationController {
         this.registrationDataService = registrationDataService;
     }
 
-
     /**
      * Результат регистрации
      */
@@ -58,4 +57,5 @@ public class RegistrationController {
         String name = registrationData.getName();
         registrationDataService.registerUser(login, password, name);
         return "/activation";
+    }
 }

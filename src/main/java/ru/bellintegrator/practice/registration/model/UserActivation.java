@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.registration.model;
 
 import ru.bellintegrator.practice.user.model.User;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,19 +19,17 @@ import javax.persistence.Version;
 @Table(name = "User_Activation")
 public class UserActivation {
     /**
-     * Идентификатор акцивации пользователя
+     * Идентификатор активации пользователя
      */
     @Id
     @Column(name = "id")
     private Long id;
 
     /**
-     * Пользователь
+     * Служебное поле hibernate
      */
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Version
+    private Integer version;
 
     /**
      * Строка активации пользователя
@@ -39,10 +38,12 @@ public class UserActivation {
     private String hash;
 
     /**
-     * Служебное поле hibernate
+     * Пользователь
      */
-    @Version
-    private Integer version;
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     /**
      * Конструктор для hibernate

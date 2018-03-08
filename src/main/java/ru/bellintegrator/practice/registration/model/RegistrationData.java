@@ -23,6 +23,12 @@ public class RegistrationData {
     private Long id;
 
     /**
+     * Служебное поле hibernate
+     */
+    @Version
+    private Integer version;
+
+    /**
      * Логин
      */
     @Column(name = "login")
@@ -39,12 +45,6 @@ public class RegistrationData {
      */
     @Column(name = "name")
     private String name;
-
-    /**
-     * Служебное поле hibernate
-     */
-    @Version
-    private Integer version;
 
     public RegistrationData() {
     }

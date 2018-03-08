@@ -10,15 +10,15 @@ CREATE TABLE IF NOT EXISTS Organization (
   COMMENT 'Сокращенное наименование организации',
   full_name VARCHAR(255) NOT NULL
   COMMENT 'Полное наименование организации',
-  inn       VARCHAR(255) UNIQUE
+  inn       VARCHAR(12) UNIQUE
   COMMENT 'ИНН организации',
-  kpp       VARCHAR(255)
+  kpp       VARCHAR(9)
   COMMENT 'КПП организации',
   address   VARCHAR(255)
   COMMENT 'Адрес организации',
   phone     VARCHAR(255)
   COMMENT 'Телефон организации',
-  is_active  BOOLEAN
+  is_active BOOLEAN
   COMMENT 'Статус активности организации'
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Office (
   COMMENT 'Наименование оффиса',
   phone           VARCHAR(255)
   COMMENT 'Телефон оффиса',
-  is_active        BOOLEAN
+  is_active       BOOLEAN
   COMMENT 'Статус активности оффиса'
 );
 
@@ -46,27 +46,27 @@ CREATE TABLE IF NOT EXISTS Office (
 -- Таблица пользователей
 --
 CREATE TABLE IF NOT EXISTS User (
-  id             INTEGER PRIMARY KEY AUTO_INCREMENT
+  id            INTEGER PRIMARY KEY AUTO_INCREMENT
   COMMENT 'Идентификатор пользователя',
-  doc_id         INT UNSIGNED NOT NULL
+  doc_id        INT UNSIGNED NOT NULL
   COMMENT 'Идентификатор документа удостоверяющего личность',
-  citizenship_id INT UNSIGNED NOT NULL
+  country_id    INT UNSIGNED NOT NULL
   COMMENT 'Идентификатор записи о гражданстве',
-  version        INTEGER      NOT NULL
+  version       INTEGER      NOT NULL
   COMMENT 'Служебное поле Hibernate',
-  office_id      INT UNSIGNED NOT NULL
+  office_id     INT UNSIGNED NOT NULL
   COMMENT 'Идентификатор оффиса',
-  first_name     VARCHAR(255) NOT NULL
+  first_name    VARCHAR(255) NOT NULL
   COMMENT 'Имя пользователя',
-  second_name    VARCHAR(255) NOT NULL
+  second_name   VARCHAR(255) NOT NULL
   COMMENT 'Фамилия пользователя',
-  middle_name    VARCHAR(255) NOT NULL
+  middle_name   VARCHAR(255) NOT NULL
   COMMENT 'Отчество пользователя',
-  position       VARCHAR(255)
+  position      VARCHAR(255)
   COMMENT 'Должность пользователя',
-  phone          VARCHAR(255)
+  phone         VARCHAR(255)
   COMMENT 'Номер телефона пользователя',
-  is_identified   BOOLEAN
+  is_identified BOOLEAN
   COMMENT 'Статус идентификации пользователя'
 );
 
@@ -108,7 +108,7 @@ CREATE TABLE Notification (
   COMMENT 'Идентификатор сообщения',
   channel ENUM ('EMAIL', 'SMS') NOT NULL
   COMMENT 'Канал для отправки сообщения',
-  address  VARCHAR(255)          NOT NULL
+  address VARCHAR(255)          NOT NULL
   COMMENT 'Адресс электронной почты',
   massage VARCHAR(255)          NOT NULL
   COMMENT 'Текст сообщения',
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS Doc_Type (
   COMMENT 'Идентификатор типа документа',
   version INTEGER      NOT NULL
   COMMENT 'Служебное поле Hibernate',
-  code    VARCHAR(255)
+  code    VARCHAR(3)
   COMMENT 'Код документа',
   name    VARCHAR(255) NOT NULL
   COMMENT 'Наименование документа'
@@ -149,12 +149,12 @@ CREATE TABLE IF NOT EXISTS Doc_Type (
 --
 -- Таблица гражданств
 --
-CREATE TABLE IF NOT EXISTS Citizenship (
+CREATE TABLE IF NOT EXISTS Country (
   id      INTEGER PRIMARY KEY AUTO_INCREMENT
   COMMENT 'Идентификатор записи',
   version INTEGER      NOT NULL
   COMMENT 'Служебное поле Hibernate',
-  code    VARCHAR(255)
+  code    VARCHAR(3)
   COMMENT 'Код общероссийского класификатора стран мира',
   name    VARCHAR(255) NOT NULL
   COMMENT 'Наименование страны'
@@ -186,8 +186,8 @@ CREATE INDEX IX_User_Doc_Id
   ON User (doc_id);
 CREATE INDEX IX_User_Office_Id
   ON User (office_id);
-CREATE INDEX IX_User_Citizenship_Id
-  ON User (citizenship_id);
+CREATE INDEX IX_User_Country_Id
+  ON User (country_id);
 CREATE INDEX IX_User_Activation_User_Id
   ON User_Activation (user_id);
 CREATE INDEX IX_Document_Doc_Type_Id
@@ -199,7 +199,7 @@ ALTER TABLE User
 ALTER TABLE User
   ADD FOREIGN KEY (doc_id) REFERENCES Document (id);
 ALTER TABLE User
-  ADD FOREIGN KEY (citizenship_id) REFERENCES Citizenship (id);
+  ADD FOREIGN KEY (country_id) REFERENCES Country (id);
 ALTER TABLE User_Activation
   ADD FOREIGN KEY (user_id) REFERENCES User (id);
 ALTER TABLE Document
