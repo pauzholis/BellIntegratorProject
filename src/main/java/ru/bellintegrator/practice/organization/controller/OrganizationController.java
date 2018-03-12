@@ -6,14 +6,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
-import ru.bellintegrator.practice.organization.view.OrganizationDeleteRequestView;
-import ru.bellintegrator.practice.organization.view.OrganizationDeleteResultView;
 import ru.bellintegrator.practice.organization.view.OrganizationListView;
-import ru.bellintegrator.practice.organization.view.OrganizationSaveRequestView;
-import ru.bellintegrator.practice.organization.view.OrganizationSaveResultView;
 import ru.bellintegrator.practice.organization.view.OrganizationView;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -50,34 +47,29 @@ public class OrganizationController {
      * Обновление организации
      */
     @RequestMapping(value = "/update", method = {POST})
-    public OrganizationView update(
+    public void update(
             @RequestBody
                     OrganizationView updateData) {
-        updateData.result = "success";
-        return updateData;
+        organizationService.updateOrg(updateData);
     }
 
     /**
      * Сохранение огранизации
      */
     @RequestMapping(value = "/save", method = {POST})
-    public OrganizationSaveResultView update(
+    public void save(
             @RequestBody
-                    OrganizationSaveRequestView saveData) {
-        OrganizationSaveResultView response = new OrganizationSaveResultView();
-        response.result = "success";
-        return response;
+                    OrganizationView saveData) {
+        organizationService.saveOrg(saveData);
     }
 
     /**
      * Удаление огранизации
      */
     @RequestMapping(value = "/delete", method = {POST})
-    public OrganizationDeleteResultView update(
+    public void delete(
             @RequestBody
-                    OrganizationDeleteRequestView deleteData) {
-        OrganizationDeleteResultView response = new OrganizationDeleteResultView();
-        response.result = "success";
-        return response;
+                    Map<String, Long> id) {
+        organizationService.deleteOrg(id);
     }
 }

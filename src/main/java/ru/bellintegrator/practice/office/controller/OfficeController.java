@@ -1,17 +1,20 @@
 package ru.bellintegrator.practice.office.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bellintegrator.practice.office.view.OfficeDeleteRequestView;
-import ru.bellintegrator.practice.office.view.OfficeDeleteResultView;
-import ru.bellintegrator.practice.office.view.OfficeListRequestView;
-import ru.bellintegrator.practice.office.view.OfficeListResultView;
-import ru.bellintegrator.practice.office.view.OfficeResultView;
+import ru.bellintegrator.practice.office.service.OfficeService;
+import ru.bellintegrator.practice.office.view.OfficeFilter;
+import ru.bellintegrator.practice.office.view.OfficeListView;
+import ru.bellintegrator.practice.office.view.OfficeView;
 import ru.bellintegrator.practice.office.view.OfficeUpdateRequestView;
 import ru.bellintegrator.practice.office.view.OfficeUpdateResultView;
 import ru.bellintegrator.practice.organization.view.OrganizationSaveRequestView;
-import ru.bellintegrator.practice.organization.view.OrganizationSaveResultView;
+import ru.bellintegrator.practice.organization.view.OrganizationView;
+
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -20,18 +23,27 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/api/office", produces = APPLICATION_JSON_VALUE)
 public class OfficeController {
 
-    @RequestMapping("/list/{orgId}")
-    public OfficeListResultView list(
+    private final OfficeService officeService;
+
+    public OfficeController(OfficeService officeService) {
+        this.officeService = officeService;
+    }
+
+    @Autowired
+
+
+    @RequestMapping("/list")
+    public OfficeListView list(
             @RequestBody
-                    OfficeListRequestView officeListData) {
-        OfficeListResultView response = new OfficeListResultView();
+                    OfficeFilter officeListData) {
+        OfficeListView response = new OfficeListView();
         response.isActive = true;
         return response;
     }
 
     @RequestMapping("/{id}")
-    public OfficeResultView office() {
-        OfficeResultView response = new OfficeResultView();
+    public OfficeView office(@PathVariable("id") Long id) {
+        OfficeView response = new OfficeView();
         response.isActive = true;
         return response;
     }
@@ -52,23 +64,19 @@ public class OfficeController {
      * Удаление оффиса
      */
     @RequestMapping(value = "/delete", method = {POST})
-    public OfficeDeleteResultView update(
+    public void deleteOffice(
             @RequestBody
-                    OfficeDeleteRequestView deleteData) {
-        OfficeDeleteResultView response = new OfficeDeleteResultView();
-        response.result = "success";
-        return response;
+                    Map<String, Long> id) {
+        officeService.deleteOffice(id);
     }
 
     /**
      * Сохраниение оффиса
      */
     @RequestMapping(value = "/save", method = {POST})
-    public OrganizationSaveResultView update(
+    public void save(
             @RequestBody
-                    OrganizationSaveRequestView saveData) {
-        OrganizationSaveResultView response = new OrganizationSaveResultView();
-        response.result = "success";
-        return response;
+                    OfficeView saveData) {
+        officeService.saveOffice(saveData);
     }
 }

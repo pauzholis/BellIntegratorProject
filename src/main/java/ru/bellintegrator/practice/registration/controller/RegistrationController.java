@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.registration.model.RegistrationData;
 import ru.bellintegrator.practice.registration.service.RegistrationDataService;
 import ru.bellintegrator.practice.registration.view.RegisterRequestView;
-import ru.bellintegrator.practice.registration.view.RegisterResultView;
+import ru.bellintegrator.practice.registration.view.RegisterView;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,18 +24,6 @@ public class RegistrationController {
     @Autowired
     public RegistrationController(RegistrationDataService registrationDataService) {
         this.registrationDataService = registrationDataService;
-    }
-
-    /**
-     * Результат регистрации
-     */
-    @RequestMapping(value = "/register", method = {POST})
-    public RegisterResultView register(
-            @RequestBody
-                    RegisterRequestView registrationData) {
-        RegisterResultView response = new RegisterResultView();
-        response.result = "success";
-        return response;
     }
 
     /**

@@ -14,14 +14,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class LoginController {
 
     /**
-     * Входные данные аккаунта
+     *
      */
     @RequestMapping(value = "/login", method = {POST})
-    public LoginResultView login(
+    public void login(
             @RequestBody
                     LoginRequestView loginData) {
-        LoginResultView response = new LoginResultView();
-        response.result = "success";
-        return response;
+
     }
 }

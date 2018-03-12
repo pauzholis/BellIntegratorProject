@@ -3,7 +3,7 @@ package ru.bellintegrator.practice.office.view;
 /**
  * Отображение параметров оффиса
  */
-public class OfficeResultView {
+public class OfficeView {
     public long id;
     public String name;
     public String address;

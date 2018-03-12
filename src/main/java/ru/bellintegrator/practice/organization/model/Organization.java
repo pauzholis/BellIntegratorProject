@@ -52,13 +52,13 @@ public class Organization {
      * ИНН Организации
      */
     @Column(name = "inn")
-    private Long inn;
+    private String inn;
 
     /**
      * КПП Организации
      */
     @Column(name = "kpp")
-    private Integer kpp;
+    private String kpp;
 
     /**
      * Адрес организации
@@ -70,7 +70,7 @@ public class Organization {
      * Телефон организации
      */
     @Column(name = "phone")
-    private Integer phone;
+    private String phone;
 
     /**
      * Статус активности организации
@@ -90,7 +90,7 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String name, String fullName, Long inn, Integer kpp, String address, Integer phone, Boolean isActive) {
+    public Organization(String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;
@@ -120,19 +120,19 @@ public class Organization {
         this.fullName = fullName;
     }
 
-    public Long getInn() {
+    public String getInn() {
         return inn;
     }
 
-    public void setInn(Long inn) {
+    public void setInn(String inn) {
         this.inn = inn;
     }
 
-    public Integer getKpp() {
+    public String getKpp() {
         return kpp;
     }
 
-    public void setKpp(Integer kpp) {
+    public void setKpp(String kpp) {
         this.kpp = kpp;
     }
 
@@ -144,11 +144,11 @@ public class Organization {
         this.address = address;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
