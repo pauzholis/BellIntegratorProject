@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.office.model;
 
+import org.hibernate.annotations.Type;
 import ru.bellintegrator.practice.organization.model.Organization;
 import ru.bellintegrator.practice.user.model.User;
 
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,7 +43,7 @@ public class Office {
     /**
      * Адрес оффиса
      */
-    @Column(name = "address")
+    @Column(name = "address", length = 50)
     private String address;
 
     /**
@@ -53,13 +55,15 @@ public class Office {
     /**
      * Телефон оффиса
      */
-    @Column(name = "phone")
+    @Column(name = "phone", length = 16)
     private Integer phone;
 
     /**
      * Статус активности оффиса
      */
-    @Column(name = "isActive")
+    @Type(type = "true_false")
+    @NotNull(message = "NOT_NULL")
+    @Column(name = "isActive", nullable = false)
     private Boolean isActive;
 
     /**
@@ -72,7 +76,7 @@ public class Office {
     /**
      * Список пользователей оффиса
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Office", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<User> users = new HashSet<>();
 
     /**

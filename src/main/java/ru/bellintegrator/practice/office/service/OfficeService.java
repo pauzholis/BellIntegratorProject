@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.office.service;
 
+import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.organization.view.OrganizationView;
 
 import java.util.Map;
@@ -7,12 +8,13 @@ import java.util.Map;
 /**
  * Сервис для работы с оффисами
  */
+@Repository
 public interface OfficeService {
 
     /**
      * Удаление организации.
      */
-    String deleteOffice(Map<String, Long> id);
+    void deleteOffice(Map<String, Long> id);
 
     /**
      * Добавление нового оффиса

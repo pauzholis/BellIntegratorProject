@@ -1,8 +1,8 @@
-package ru.bellintegrator.practice.view;
+package ru.bellintegrator.practice.response.view;
 
 /**
  * Отображение результата
  */
 public class ResultView {
-        public String result;
+    Object data;
 }

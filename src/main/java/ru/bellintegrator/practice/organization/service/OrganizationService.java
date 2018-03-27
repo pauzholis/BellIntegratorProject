@@ -1,7 +1,8 @@
 package ru.bellintegrator.practice.organization.service;
 
-import ru.bellintegrator.practice.organization.view.OrganizationListView;
+import ru.bellintegrator.practice.organization.view.OrganizationFilter;
 import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.response.RequestProcessingException;
 
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,12 @@ public interface OrganizationService {
     /**
      * Получить все организации
      */
-    List<OrganizationListView> list(String name, boolean isActive);
+    List<OrganizationView> list(OrganizationFilter organizationFilter) throws RequestProcessingException;
 
     /**
      * Обнавление организации
      */
-    String updateOrg(OrganizationView orgView);
+    void updateOrg(OrganizationView orgView);
 
     /**
      * Добавление новой организации
@@ -29,5 +30,5 @@ public interface OrganizationService {
     /**
      * Удаление организации.
      */
-    String deleteOrg(Map<String, Long> id);
+    void deleteOrg(Map<String, Long> id);
 }

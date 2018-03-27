@@ -6,10 +6,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,8 +27,6 @@ public class Document {
      * Идентификатор документа
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
     /**
@@ -45,7 +42,7 @@ public class Document {
     private Integer number;
 
     /**
-     * Дата окончания активности сообщения для отправки пользователю
+     * Дата начала действия документа
      */
     @Temporal(value = TemporalType.DATE)
     @Column(name = "date")
@@ -54,14 +51,14 @@ public class Document {
     /**
      * Пользователь
      */
-    @OneToOne(mappedBy = "Document", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private User user;
 
     /**
      * Идентификатор типа документа
      */
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "doc_type_id")
     private DocType docType;
 

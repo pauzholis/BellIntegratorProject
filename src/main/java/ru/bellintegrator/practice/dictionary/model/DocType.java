@@ -2,13 +2,18 @@ package ru.bellintegrator.practice.dictionary.model;
 
 import ru.bellintegrator.practice.user.model.Document;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Тип документа
@@ -34,8 +39,8 @@ public class DocType {
     /**
      * Код документа
      */
-    @Column(name = "code")
-    private Integer code;
+    @Column(name = "code", length = 3)
+    private String code;
 
     /**
      * Имя регистрирующегося пользователя
@@ -44,12 +49,18 @@ public class DocType {
     private String name;
 
     /**
+     * Список документов одного типа
+     */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "docType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Document> documents = new HashSet<>();
+
+    /**
      * Конструктор для hibernate
      */
     public DocType() {
     }
 
-    public DocType(Integer code, String name, Document document) {
+    public DocType(String code, String name) {
         this.code = code;
         this.name = name;
     }
@@ -58,11 +69,11 @@ public class DocType {
         return id;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -72,5 +83,13 @@ public class DocType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Set<Document> documents) {
+        this.documents = documents;
     }
 }

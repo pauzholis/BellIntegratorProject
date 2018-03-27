@@ -12,5 +12,4 @@ public class OrganizationView {
     public String address;
     public String phone;
     public boolean isActive;
-    public String result;
 }

@@ -35,18 +35,18 @@ public class UserActivation {
     private Integer version;
 
     /**
-     * Строка активации пользователя
-     */
-    @Column(name = "hash")
-    private String hash;
-
-    /**
      * Пользователь
      */
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "registration_data_id")
     private User user;
+
+    /**
+     * Строка активации пользователя
+     */
+    @Column(name = "message_hash")
+    private String hash;
 
     /**
      * Конструктор для hibernate
@@ -57,10 +57,6 @@ public class UserActivation {
     public UserActivation(User user, String hash) {
         this.user = user;
         this.hash = hash;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public User getUser() {

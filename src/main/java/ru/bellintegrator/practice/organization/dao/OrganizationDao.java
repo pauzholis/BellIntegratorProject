@@ -2,6 +2,8 @@ package ru.bellintegrator.practice.organization.dao;
 
 import ru.bellintegrator.practice.organization.model.Organization;
 
+import java.util.List;
+
 /**
  * DAO для работы с организыциями
  */
@@ -21,4 +23,9 @@ public interface OrganizationDao {
      * Удаление организации по id.
      */
     boolean deleteOrgById(Long id);
+
+    /**
+     * Получение организаций
+     */
+    List<Organization> list(Organization organization);
 }

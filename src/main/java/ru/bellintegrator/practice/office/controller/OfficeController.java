@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.OfficeFilter;
 import ru.bellintegrator.practice.office.view.OfficeListView;
-import ru.bellintegrator.practice.office.view.OfficeView;
 import ru.bellintegrator.practice.office.view.OfficeUpdateRequestView;
 import ru.bellintegrator.practice.office.view.OfficeUpdateResultView;
-import ru.bellintegrator.practice.organization.view.OrganizationSaveRequestView;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.office.view.OfficeView;
 
 import java.util.Map;
 
@@ -22,20 +20,17 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 @RequestMapping(value = "/api/office", produces = APPLICATION_JSON_VALUE)
 public class OfficeController {
-
     private final OfficeService officeService;
 
+    @Autowired
     public OfficeController(OfficeService officeService) {
         this.officeService = officeService;
     }
 
-    @Autowired
-
-
     @RequestMapping("/list")
     public OfficeListView list(
             @RequestBody
-                    OfficeFilter officeListData) {
+                    OfficeFilter filter) {
         OfficeListView response = new OfficeListView();
         response.isActive = true;
         return response;
@@ -68,15 +63,5 @@ public class OfficeController {
             @RequestBody
                     Map<String, Long> id) {
         officeService.deleteOffice(id);
-    }
-
-    /**
-     * Сохраниение оффиса
-     */
-    @RequestMapping(value = "/save", method = {POST})
-    public void save(
-            @RequestBody
-                    OfficeView saveData) {
-        officeService.saveOffice(saveData);
     }
 }

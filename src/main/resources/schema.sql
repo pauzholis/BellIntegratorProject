@@ -2,162 +2,107 @@
 -- Таблица организаций
 --
 CREATE TABLE IF NOT EXISTS Organization (
-  id        INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-  COMMENT 'Идентификатор организации',
-  version   INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  name      VARCHAR(255) NOT NULL
-  COMMENT 'Сокращенное наименование организации',
-  full_name VARCHAR(255) NOT NULL
-  COMMENT 'Полное наименование организации',
-  inn       VARCHAR(12) UNIQUE
-  COMMENT 'ИНН организации',
-  kpp       VARCHAR(9)
-  COMMENT 'КПП организации',
-  address   VARCHAR(255)
-  COMMENT 'Адрес организации',
-  phone     VARCHAR(16)
-  COMMENT 'Телефон организации',
-  is_active BOOLEAN
-  COMMENT 'Статус активности организации'
+  id        INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  version   INTEGER      NOT NULL,
+  name      VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
+  inn       VARCHAR(12) UNIQUE,
+  kpp       VARCHAR(9),
+  address   VARCHAR(255),
+  phone     VARCHAR(16),
+  is_active BOOLEAN      NOT NULL
 );
 
 --
 -- Таблица оффисов
 --
 CREATE TABLE IF NOT EXISTS Office (
-  id              INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-  COMMENT 'Идентификатор оффиса',
-  version         INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  address         VARCHAR(50)  NOT NULL
-  COMMENT 'Адрес оффиса',
-  organization_id INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор организации',
-  name            VARCHAR(255) NOT NULL
-  COMMENT 'Наименование оффиса',
-  phone           VARCHAR(16)
-  COMMENT 'Телефон оффиса',
+  id              INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  version         INTEGER      NOT NULL,
+  address         VARCHAR(50)  NOT NULL,
+  organization_id INT UNSIGNED NOT NULL,
+  name            VARCHAR(255) NOT NULL,
+  phone           VARCHAR(16),
   is_active       BOOLEAN
-  COMMENT 'Статус активности оффиса'
 );
 
 --
 -- Таблица пользователей
 --
 CREATE TABLE IF NOT EXISTS User (
-  id            INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-  COMMENT 'Идентификатор пользователя',
-  doc_id        INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор документа удостоверяющего личность',
-  country_id    INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор записи о гражданстве',
-  version       INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  office_id     INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор оффиса',
-  first_name    VARCHAR(255) NOT NULL
-  COMMENT 'Имя пользователя',
-  second_name   VARCHAR(255) NOT NULL
-  COMMENT 'Фамилия пользователя',
-  middle_name   VARCHAR(255) NOT NULL
-  COMMENT 'Отчество пользователя',
-  position      VARCHAR(255)
-  COMMENT 'Должность пользователя',
-  phone         VARCHAR(16)
-  COMMENT 'Номер телефона пользователя',
+  id            INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  doc_id        INT UNSIGNED NOT NULL,
+  country_id    INT UNSIGNED NOT NULL,
+  version       INTEGER      NOT NULL,
+  office_id     INT UNSIGNED NOT NULL,
+  first_name    VARCHAR(255) NOT NULL,
+  second_name   VARCHAR(255) NOT NULL,
+  middle_name   VARCHAR(255) NOT NULL,
+  position      VARCHAR(255),
+  phone         VARCHAR(16),
   is_identified BOOLEAN
-  COMMENT 'Статус идентификации пользователя'
 );
 
 --
 -- Таблица активации пользователей
 --
 CREATE TABLE IF NOT EXISTS User_Activation (
-  id      INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
-  COMMENT 'Идентификатор активации',
-  user_id INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор пользователя',
-  hash    VARCHAR(255) NOT NULL
-  COMMENT 'Строка активации пользователя',
-  version INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate'
+  id                   INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  registration_data_id INT UNSIGNED NOT NULL,
+  message_hash         VARCHAR(255) NOT NULL,
+  version              INTEGER      NOT NULL
 );
 
 --
 -- Таблица регистрационных данных
 --
 CREATE TABLE IF NOT EXISTS Registration_Data (
-  id       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
-  COMMENT 'Идентификатор регистрационных данных',
-  login    VARCHAR(255) NOT NULL
-  COMMENT 'Логин',
-  password VARCHAR(255) NOT NULL
-  COMMENT 'Пароль',
-  name     VARCHAR(255) NOT NULL
-  COMMENT 'Имя регистрирующегося пользователя',
+  id       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  login    VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  name     VARCHAR(255) NOT NULL,
   version  INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate'
 );
 
 --
 -- Таблица сообщений
 --
 CREATE TABLE Notification (
-  id      INT UNSIGNED          NOT NULL AUTO_INCREMENT PRIMARY KEY
-  COMMENT 'Идентификатор сообщения',
-  channel ENUM ('EMAIL', 'SMS') NOT NULL
-  COMMENT 'Канал для отправки сообщения',
-  address VARCHAR(255)          NOT NULL
-  COMMENT 'Адресс электронной почты',
-  massage VARCHAR(255)          NOT NULL
-  COMMENT 'Текст сообщения',
-  version INTEGER               NOT NULL
-  COMMENT 'Служебное поле Hibernate'
+  id      INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  address VARCHAR(255) NOT NULL,
+  massage VARCHAR(255) NOT NULL,
+  version INTEGER      NOT NULL
 );
 
 --
 -- Таблица документов
 --
 CREATE TABLE IF NOT EXISTS Document (
-  id          INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-  COMMENT 'Идентификатор документа',
-  doc_type_id INT UNSIGNED NOT NULL
-  COMMENT 'Идентификатор типа документа',
-  version     INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  number      INTEGER
-  COMMENT 'Номер документа',
+  id          INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  doc_type_id INT UNSIGNED NOT NULL,
+  version     INTEGER      NOT NULL,
+  number      INTEGER,
   date        DATE         NOT NULL
-  COMMENT 'Дата выдачи документа'
 );
 
 --
 -- Таблица типов документов
 --
 CREATE TABLE IF NOT EXISTS Doc_Type (
-  id      INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-  COMMENT 'Идентификатор типа документа',
-  version INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  code    VARCHAR(3)
-  COMMENT 'Код документа',
+  id      INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  version INTEGER      NOT NULL,
+  code    VARCHAR(3),
   name    VARCHAR(255) NOT NULL
-  COMMENT 'Наименование документа'
 );
 
 --
 -- Таблица гражданств
 --
 CREATE TABLE IF NOT EXISTS Country (
-  id      INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT
-  COMMENT 'Идентификатор записи',
-  version INTEGER      NOT NULL
-  COMMENT 'Служебное поле Hibernate',
-  code    VARCHAR(3)
-  COMMENT 'Код общероссийского класификатора стран мира',
+  id      INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  version INTEGER      NOT NULL,
+  code    VARCHAR(3),
   name    VARCHAR(255) NOT NULL
-  COMMENT 'Наименование страны'
 );
 
 CREATE INDEX IX_Organization_Name
@@ -183,7 +128,7 @@ CREATE INDEX IX_User_Office_Id
 CREATE INDEX IX_User_Country_Id
   ON User (country_id);
 CREATE INDEX IX_User_Activation_User_Id
-  ON User_Activation (user_id);
+  ON User_Activation (registration_data_id);
 CREATE INDEX IX_Document_Doc_Type_Id
   ON Document (doc_type_id);
 ALTER TABLE Office
@@ -195,6 +140,6 @@ ALTER TABLE User
 ALTER TABLE User
   ADD FOREIGN KEY (country_id) REFERENCES Country (id);
 ALTER TABLE User_Activation
-  ADD FOREIGN KEY (user_id) REFERENCES User (id);
+  ADD FOREIGN KEY (registration_data_id) REFERENCES User (id);
 ALTER TABLE Document
   ADD FOREIGN KEY (doc_type_id) REFERENCES Doc_Type (id);

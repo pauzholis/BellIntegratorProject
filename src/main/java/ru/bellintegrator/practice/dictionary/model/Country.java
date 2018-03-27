@@ -1,15 +1,10 @@
 package ru.bellintegrator.practice.dictionary.model;
 
-import ru.bellintegrator.practice.user.model.User;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -37,8 +32,8 @@ public class Country {
     /**
      * Код общероссийского класификатора стран мира
      */
-    @Column(name = "code")
-    private Integer code;
+    @Column(name = "code", length = 3)
+    private String code;
 
     /**
      * Наименование страны
@@ -46,30 +41,23 @@ public class Country {
     @Column(name = "name")
     private String name;
 
-    /**
-     * Пользователь
-     */
-    @OneToOne(mappedBy = "Country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private User user;
-
     public Country() {
     }
 
-    public Country(Integer code, String name, User user) {
+    public Country(String code, String name) {
         this.code = code;
         this.name = name;
-        this.user = user;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -79,13 +67,5 @@ public class Country {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
-import ru.bellintegrator.practice.organization.view.OrganizationListView;
+import ru.bellintegrator.practice.organization.view.OrganizationFilter;
 import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.response.RequestProcessingException;
 
 import java.util.List;
 import java.util.Map;
@@ -37,10 +38,10 @@ public class OrganizationController {
      * Отображение списка организаций
      */
     @RequestMapping(value = "/list", method = {POST})
-    public List<OrganizationListView> list(
+    public List<OrganizationView> list(
             @RequestBody
-                    OrganizationListView organizationListView) {
-        return organizationService.list(organizationListView.name, organizationListView.isActive);
+                    OrganizationFilter organizationFilter) throws RequestProcessingException {
+        return organizationService.list(organizationFilter);
     }
 
     /**

@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.organization.model;
 
+import org.hibernate.annotations.Type;
 import ru.bellintegrator.practice.office.model.Office;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,37 +53,39 @@ public class Organization {
     /**
      * ИНН Организации
      */
-    @Column(name = "inn")
+    @Column(name = "inn", length = 12)
     private String inn;
 
     /**
      * КПП Организации
      */
-    @Column(name = "kpp")
+    @Column(name = "kpp", length = 9)
     private String kpp;
 
     /**
      * Адрес организации
      */
-    @Column(name = "address")
+    @Column(name = "address", length = 12)
     private String address;
 
     /**
      * Телефон организации
      */
-    @Column(name = "phone")
+    @Column(name = "phone", length = 16)
     private String phone;
 
     /**
      * Статус активности организации
      */
-    @Column(name = "isActive")
+    @Type(type = "true_false")
+    @NotNull(message = "NOT_NULL")
+    @Column(name = "isActive", nullable = false)
     private Boolean isActive;
 
     /**
      * Список оффисов орагнизации
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Organization", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Office> offices = new HashSet<>();
 
     /**

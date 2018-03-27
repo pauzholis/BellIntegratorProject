@@ -1,9 +1,9 @@
 package ru.bellintegrator.practice.office.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.bellintegrator.practice.office.dao.OfficeDao;
 import ru.bellintegrator.practice.office.service.OfficeService;
-import ru.bellintegrator.practice.organization.dao.OrganizationDao;
 import ru.bellintegrator.practice.organization.view.OrganizationView;
 
 import java.util.Map;
@@ -11,8 +11,8 @@ import java.util.Map;
 /**
  * {@inheritDoc}
  */
-
-public class OfficeServiceImpl implements OfficeService{
+@Service
+public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeDao officeDao;
 
@@ -25,10 +25,12 @@ public class OfficeServiceImpl implements OfficeService{
      * {@inheritDoc}
      */
     @Override
-    public String deleteOffice(Map<String, Long> id) {
-        return (officeDao.deleteOfficeById(id.get("id"))) ? "{\"result\":\"success\"}" : "{\"error\":\"\"}";
+    public void deleteOffice(Map<String, Long> id) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String saveOffice(OrganizationView orgView) {
         return null;
