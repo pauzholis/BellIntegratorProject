@@ -10,6 +10,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import ru.bellintegrator.practice.response.view.ResultView;
 import ru.bellintegrator.practice.response.view.SuccessView;
 
 /**
@@ -17,7 +18,7 @@ import ru.bellintegrator.practice.response.view.SuccessView;
  */
 @RestControllerAdvice
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -28,12 +29,16 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse response) {
+        ResultView resultView = new ResultView();
+
         if (body instanceof RequestProcessingException || body instanceof Exception) {
-            LOG.error("response {}");
-        } else if (body != null) {
-            return "data" + ": " + body;
+            log.error("response {}");
         }
-        return new SuccessView("success");
+        if (body == null) {
+            return new SuccessView("success");
+        }
+        resultView.data = body;
+        return resultView;
     }
 }
 

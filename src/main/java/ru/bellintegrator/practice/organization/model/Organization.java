@@ -94,7 +94,8 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
+    public Organization(String name, String fullName, String inn, String kpp, String address,
+                        String phone, Boolean isActive) {
         this.name = name;
         this.fullName = fullName;
         this.inn = inn;
@@ -106,6 +107,10 @@ public class Organization {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

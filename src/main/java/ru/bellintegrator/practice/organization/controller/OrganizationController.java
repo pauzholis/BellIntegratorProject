@@ -1,17 +1,20 @@
 package ru.bellintegrator.practice.organization.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
 import ru.bellintegrator.practice.organization.view.OrganizationFilter;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.organization.view.OrganizationListView;
+import ru.bellintegrator.practice.organization.view.OrganizationSaveView;
+import ru.bellintegrator.practice.organization.view.OrganizationUpdateView;
+import ru.bellintegrator.practice.registration.service.ValidationService;
 import ru.bellintegrator.practice.response.RequestProcessingException;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -21,26 +24,27 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class OrganizationController {
 
     private final OrganizationService organizationService;
+    private final ValidationService validationService;
 
     @Autowired
-    public OrganizationController(OrganizationService organizationService) {
+    public OrganizationController(OrganizationService organizationService, ValidationService validationService) {
         this.organizationService = organizationService;
+        this.validationService = validationService;
     }
 
     @RequestMapping("/{id}")
-    public OrganizationView organization(@PathVariable("id") Long id) {
-        OrganizationView response = new OrganizationView();
-        response.isActive = true;
-        return response;
+    public OrganizationUpdateView organization(@PathVariable("id") Long id) {
+        return organizationService.getOrgById(id);
     }
 
     /**
      * Отображение списка организаций
      */
     @RequestMapping(value = "/list", method = {POST})
-    public List<OrganizationView> list(
+    public List<OrganizationListView> list(
             @RequestBody
-                    OrganizationFilter organizationFilter) throws RequestProcessingException {
+                    OrganizationFilter organizationFilter, BindingResult result) throws RequestProcessingException {
+        validationService.validate(result);
         return organizationService.list(organizationFilter);
     }
 
@@ -50,7 +54,8 @@ public class OrganizationController {
     @RequestMapping(value = "/update", method = {POST})
     public void update(
             @RequestBody
-                    OrganizationView updateData) {
+                    OrganizationUpdateView updateData, BindingResult result) throws RequestProcessingException {
+        validationService.validate(result);
         organizationService.updateOrg(updateData);
     }
 
@@ -60,17 +65,16 @@ public class OrganizationController {
     @RequestMapping(value = "/save", method = {POST})
     public void save(
             @RequestBody
-                    OrganizationView saveData) {
-        organizationService.saveOrg(saveData);
+                    OrganizationSaveView saveData, BindingResult result) throws RequestProcessingException {
+        validationService.validate(result);
+        organizationService.save(saveData);
     }
 
     /**
      * Удаление огранизации
      */
-    @RequestMapping(value = "/delete", method = {POST})
-    public void delete(
-            @RequestBody
-                    Map<String, Long> id) {
+    @RequestMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
         organizationService.deleteOrg(id);
     }
 }

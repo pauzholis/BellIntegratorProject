@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.office.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,11 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.OfficeFilter;
 import ru.bellintegrator.practice.office.view.OfficeListView;
-import ru.bellintegrator.practice.office.view.OfficeUpdateRequestView;
-import ru.bellintegrator.practice.office.view.OfficeUpdateResultView;
 import ru.bellintegrator.practice.office.view.OfficeView;
+import ru.bellintegrator.practice.registration.service.ValidationService;
+import ru.bellintegrator.practice.response.RequestProcessingException;
 
-import java.util.Map;
+import javax.validation.Valid;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -21,19 +23,20 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/api/office", produces = APPLICATION_JSON_VALUE)
 public class OfficeController {
     private final OfficeService officeService;
+    private final ValidationService validationService;
 
     @Autowired
-    public OfficeController(OfficeService officeService) {
+    public OfficeController(OfficeService officeService, ValidationService validationService) {
         this.officeService = officeService;
+        this.validationService = validationService;
     }
 
     @RequestMapping("/list")
-    public OfficeListView list(
+    public List<OfficeListView> list(
             @RequestBody
-                    OfficeFilter filter) {
-        OfficeListView response = new OfficeListView();
-        response.isActive = true;
-        return response;
+                    OfficeFilter filter, BindingResult result) throws RequestProcessingException {
+        validationService.validate(result);
+        return officeService.list(filter);
     }
 
     @RequestMapping("/{id}")
@@ -47,12 +50,10 @@ public class OfficeController {
      * Обновление данных оффиса
      */
     @RequestMapping(value = "/update", method = {POST})
-    public OfficeUpdateResultView update(
-            @RequestBody
-                    OfficeUpdateRequestView updateData) {
-        OfficeUpdateResultView response = new OfficeUpdateResultView();
-        response.result = "success";
-        return response;
+    public void update(@Valid @RequestBody OfficeView updateData, BindingResult result)
+            throws RequestProcessingException {
+        validationService.validate(result);
+        officeService.updateOffice(updateData);
     }
 
     /**
@@ -61,7 +62,7 @@ public class OfficeController {
     @RequestMapping(value = "/delete", method = {POST})
     public void deleteOffice(
             @RequestBody
-                    Map<String, Long> id) {
+                    Long id) {
         officeService.deleteOffice(id);
     }
 }

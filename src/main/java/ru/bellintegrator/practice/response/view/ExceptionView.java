@@ -5,4 +5,8 @@ package ru.bellintegrator.practice.response.view;
  */
 public class ExceptionView {
     public String error;
+
+    public ExceptionView(String error) {
+        this.error = "Внутренняя ошибка сервера";
+    }
 }

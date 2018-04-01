@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.organization.dao;
 
 import ru.bellintegrator.practice.organization.model.Organization;
+import ru.bellintegrator.practice.organization.view.OrganizationFilter;
 
 import java.util.List;
 
@@ -12,20 +13,20 @@ public interface OrganizationDao {
     /**
      * Получение объекта Organization по первичному ключу.
      */
-    Organization getOrganizationById(Long id);
+    Organization getById(Long id);
 
     /**
      * Сохранение новой организации
      */
-    Organization save(Organization org);
+    void save(Organization org);
 
     /**
      * Удаление организации по id.
      */
-    boolean deleteOrgById(Long id);
+    void deleteById(Long id);
 
     /**
      * Получение организаций
      */
-    List<Organization> list(Organization organization);
+    List<Organization> list(OrganizationFilter organizationFilter);
 }

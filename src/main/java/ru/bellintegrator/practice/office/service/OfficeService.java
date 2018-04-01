@@ -1,9 +1,13 @@
 package ru.bellintegrator.practice.office.service;
 
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.office.view.OfficeFilter;
+import ru.bellintegrator.practice.office.view.OfficeListView;
+import ru.bellintegrator.practice.office.view.OfficeSaveView;
+import ru.bellintegrator.practice.office.view.OfficeView;
+import ru.bellintegrator.practice.response.RequestProcessingException;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Сервис для работы с оффисами
@@ -14,10 +18,26 @@ public interface OfficeService {
     /**
      * Удаление организации.
      */
-    void deleteOffice(Map<String, Long> id);
+    void deleteOffice(Long id);
 
     /**
      * Добавление нового оффиса
      */
-    String saveOffice(OrganizationView orgView);
+    void saveOffice(OfficeSaveView officeSaveView);
+
+    /**
+     * Обновление оффиса
+     */
+    void updateOffice(OfficeView officeView);
+
+    /**
+     * Получить все организации
+     */
+    List<OfficeListView> list(OfficeFilter officeFilter) throws RequestProcessingException;
+
+    /**
+     * Получить оффис по идентификатору
+     */
+    OfficeView getOfficeById(Long id);
+
 }

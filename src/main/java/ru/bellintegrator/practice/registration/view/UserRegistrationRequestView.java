@@ -1,12 +1,28 @@
 package ru.bellintegrator.practice.registration.view;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Size;
+
 /**
  * Отображение данных запроса регистрации
  */
 public class UserRegistrationRequestView {
+
+    @NotBlank(message = "Поле логин должно быть заполнено.")
+    @Size(min = 2, max = 255, message = "Введенный логин не соответствует ограничению по количеству символов")
     public String login;
+
+    @NotBlank(message = "Поле пароль должно быть заполнено.")
+    @Size(min = 2, max = 255, message = "Введенный пароль не соответствует ограничению по количеству символов")
     public String password;
+
+    @NotBlank(message = "Поле имя должно быть заполнено.")
+    @Size(min = 2, max = 255, message = "Введенное имя не соответствует ограничению по количеству символов")
     public String name;
+
+    @NotBlank(message = "Некорректный адресс почты.")
+    @Size(min = 2, max = 255, message = "Слишком длинный адресс почты")
     public String email;
 
     public UserRegistrationRequestView() {
@@ -16,38 +32,6 @@ public class UserRegistrationRequestView {
         this.login = login;
         this.password = password;
         this.name = name;
-        this.email = email;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
     }
 }

@@ -1,8 +1,8 @@
 package ru.bellintegrator.practice.office.model;
 
 import org.hibernate.annotations.Type;
+import ru.bellintegrator.practice.employee.model.Employee;
 import ru.bellintegrator.practice.organization.model.Organization;
-import ru.bellintegrator.practice.user.model.User;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,7 +56,7 @@ public class Office {
      * Телефон оффиса
      */
     @Column(name = "phone", length = 16)
-    private Integer phone;
+    private String phone;
 
     /**
      * Статус активности оффиса
@@ -77,7 +77,7 @@ public class Office {
      * Список пользователей оффиса
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "office", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<User> users = new HashSet<>();
+    private Set<Employee> employees = new HashSet<>();
 
     /**
      * Конструктор для hibernate
@@ -85,9 +85,8 @@ public class Office {
     public Office() {
     }
 
-    public Office(String address, Organization organization, String name, Integer phone, Boolean isActive) {
+    public Office(String address, String name, String phone, Boolean isActive) {
         this.address = address;
-        this.organization = organization;
         this.name = name;
         this.phone = phone;
         this.isActive = isActive;
@@ -129,19 +128,19 @@ public class Office {
         isActive = active;
     }
 
-    public Set<User> getOffices() {
-        return users;
+    public Set<Employee> getOffices() {
+        return employees;
     }
 
-    public void setOffices(Set<User> offices) {
-        this.users = offices;
+    public void setOffices(Set<Employee> offices) {
+        this.employees = offices;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 }

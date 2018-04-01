@@ -13,16 +13,15 @@ import ru.bellintegrator.practice.response.view.ExceptionView;
 @RestControllerAdvice
 public class ExceptionHandlerController {
 
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
      * Обработка собственного исключения
      */
     @ExceptionHandler(RequestProcessingException.class)
     public ExceptionView handleException(RequestProcessingException e) {
-        LOG.error("response {}", e.getMessage(), e);
-        ExceptionView exceptionView = new ExceptionView();
-        exceptionView.error = e.getMessage();
+        log.error("response {}", e.getMessage(), e);
+        ExceptionView exceptionView = new ExceptionView("Внутренняя ошибка сервера");
         return exceptionView;
     }
 
@@ -31,9 +30,8 @@ public class ExceptionHandlerController {
      */
     @ExceptionHandler(Exception.class)
     public ExceptionView handleOtherException(Exception e) {
-        LOG.error("response {}", e.getMessage(), e);
-        ExceptionView exceptionView = new ExceptionView();
-        exceptionView.error = "Внутренняя ошибка сервера";
+        log.error("response {}", e.getMessage(), e);
+        ExceptionView exceptionView = new ExceptionView("Внутренняя ошибка сервера");
         return exceptionView;
     }
 

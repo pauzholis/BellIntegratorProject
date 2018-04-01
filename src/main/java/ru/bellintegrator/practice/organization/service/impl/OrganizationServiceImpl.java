@@ -10,11 +10,12 @@ import ru.bellintegrator.practice.organization.dao.OrganizationDao;
 import ru.bellintegrator.practice.organization.model.Organization;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
 import ru.bellintegrator.practice.organization.view.OrganizationFilter;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.organization.view.OrganizationListView;
+import ru.bellintegrator.practice.organization.view.OrganizationSaveView;
+import ru.bellintegrator.practice.organization.view.OrganizationUpdateView;
 import ru.bellintegrator.practice.response.RequestProcessingException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 public class OrganizationServiceImpl implements OrganizationService {
 
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final OrganizationDao organizationDao;
 
     public OrganizationServiceImpl(OrganizationDao organizationDao) {
@@ -37,29 +38,10 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public List<OrganizationView> list(OrganizationFilter organizationFilter) throws RequestProcessingException {
+    public List<OrganizationListView> list(OrganizationFilter organizationFilter) throws RequestProcessingException {
 
-        checkFilterParams(organizationFilter);
-
-        Organization organization = new Organization();
-
-        organization.setName(organizationFilter.name);
-        organization.setInn(organizationFilter.inn);
-        organization.setActive(organizationFilter.isActive);
-
-        List<Organization> organizations = organizationDao.list(organization);
-        Function<Organization, OrganizationView> mapOrganization = o -> {
-            OrganizationView organizationView = new OrganizationView();
-            organizationView.id = o.getId();
-            organizationView.name = o.getName();
-            organizationView.isActive = o.getActive();
-
-            LOG.info(organizationView.toString());
-
-            return organizationView;
-        };
-
-        return organizations.stream().map(mapOrganization).collect(Collectors.toList());
+        List<Organization> organizations = organizationDao.list(organizationFilter);
+        return transformEntityToView(organizations);
     }
 
     /**
@@ -67,40 +49,65 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public void updateOrg(OrganizationView organizationView) {
-        Organization organization = new Organization(organizationView.name,
-                organizationView.fullName,
-                organizationView.inn,
-                organizationView.kpp,
-                organizationView.address,
-                organizationView.phone,
-                organizationView.isActive);
-        Organization result = organizationDao.save(organization);
-        LOG.info("Organization add as " + organization);
+    public void updateOrg(OrganizationUpdateView organizationUpdateView) {
+        Organization organization = new Organization(organizationUpdateView.name,
+                organizationUpdateView.fullName,
+                organizationUpdateView.inn,
+                organizationUpdateView.kpp,
+                organizationUpdateView.address,
+                organizationUpdateView.phone,
+                organizationUpdateView.isActive);
+        organization.setId(organizationUpdateView.id);
+        organizationDao.save(organization);
+        log.info("Organization add as " + organization);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String saveOrg(OrganizationView orgView) {
-        return null;
+    public void deleteOrg(Long id) {
+        organizationDao.deleteById(id);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    private List<OrganizationListView> transformEntityToView(List<Organization> organizations) {
+        Function<Organization, OrganizationListView> mapOrganization = o -> {
+            OrganizationListView organizationListView = new OrganizationListView();
+            organizationListView.id = o.getId();
+            organizationListView.name = o.getName();
+            organizationListView.isActive = o.getActive();
+
+            log.info(organizationListView.toString());
+
+            return organizationListView;
+        };
+        return organizations.stream().map(mapOrganization).collect(Collectors.toList());
+    }
+
     @Override
-    public void deleteOrg(Map<String, Long> id) {
-
+    public OrganizationUpdateView getOrgById(Long id) {
+        Organization organization = organizationDao.getById(id);
+        return new OrganizationUpdateView(organization.getId(),
+                organization.getName(),
+                organization.getFullName(),
+                organization.getInn(),
+                organization.getKpp(),
+                organization.getAddress(),
+                organization.getPhone(),
+                organization.getActive());
     }
 
-    private void checkFilterParams(OrganizationFilter organizationFilter) throws RequestProcessingException {
-        if (organizationFilter.name == null) {
-            throw new RequestProcessingException("Organization name is null");
-        }
-        if (organizationFilter.inn == null) {
-            throw new RequestProcessingException("Organization inn is null");
-        }
+    @Override
+    public void save(OrganizationSaveView view) {
+        Organization organization = new Organization(view.name,
+                view.fullName,
+                view.inn,
+                view.kpp,
+                view.address,
+                view.phone,
+                view.isActive);
+        organizationDao.save(organization);
+        log.info("Organization add as " + organization);
+
     }
 }

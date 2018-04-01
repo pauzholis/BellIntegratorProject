@@ -5,6 +5,7 @@ package ru.bellintegrator.practice.response.view;
  */
 public class SuccessView {
     public String result;
+
     public SuccessView(String result) {
         this.result = "success";
     }

@@ -7,13 +7,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.practice.registration.dao.NotificationDao;
 import ru.bellintegrator.practice.registration.model.Notification;
 import ru.bellintegrator.practice.registration.service.MailService;
-import ru.bellintegrator.practice.user.dao.NotificationDao;
 
 import java.util.List;
 
 public class MailServiceImpl implements MailService {
+
     private final NotificationDao notificationDao;
     private final JavaMailSender sender;
 

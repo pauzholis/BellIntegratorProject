@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.organization.dao.OrganizationDao;
 import ru.bellintegrator.practice.organization.model.Organization;
+import ru.bellintegrator.practice.organization.view.OrganizationFilter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,26 +26,28 @@ public class OrganizationDaoImpl implements OrganizationDao {
     }
 
     @Override
-    public Organization getOrganizationById(Long id) {
-        return null;
+    public Organization getById(Long id) {
+
+        return em.find(Organization.class, id);
     }
 
     @Override
-    public Organization save(Organization org) {
-        return null;
+    public void save(Organization org) {
+        em.persist(org);
     }
 
     @Override
-    public boolean deleteOrgById(Long id) {
-        return false;
+    public void deleteById(Long id) {
+        Organization org = em.find(Organization.class, id);
+        em.remove(org);
     }
 
     @Override
-    public List<Organization> list(Organization organization) {
+    public List<Organization> list(OrganizationFilter organizationFilter) {
 
-        String name = organization.getName();
-        String inn = organization.getInn();
-        Boolean isActive = organization.getActive();
+        String name = organizationFilter.name;
+        String inn = organizationFilter.inn;
+        Boolean isActive = organizationFilter.isActive;
 
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteriaQuery = criteriaBuilder.createQuery(Organization.class);

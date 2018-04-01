@@ -1,15 +1,32 @@
 package ru.bellintegrator.practice.office.dao;
 
-import org.springframework.data.repository.CrudRepository;
 import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.view.OfficeFilter;
+
+import java.util.List;
 
 /**
  * DAO для работы с оффисами
  */
-public interface OfficeDao extends CrudRepository<Office, Long> {
+public interface OfficeDao {
 
     /**
      * Удаление оффиса по id.
      */
-    boolean deleteOfficeById(Long id);
+    void deleteById(Long id);
+
+    /**
+     * Получение организаций
+     */
+    List<Office> list(OfficeFilter officeFilter);
+
+    /**
+     * Получение объекта Office по первичному ключу.
+     */
+    Office getById(Long id);
+
+    /**
+     * Сохранение нового оффиса
+     */
+    void save(Office office);
 }

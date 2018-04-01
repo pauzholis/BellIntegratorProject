@@ -1,12 +1,8 @@
 package ru.bellintegrator.practice.registration.model;
 
-import ru.bellintegrator.practice.user.model.User;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -18,21 +14,15 @@ import javax.persistence.Version;
  * Активация пользователя
  */
 @Entity
-@Table(name = "User_Activation")
+@Table(name = "user_activation")
 public class UserActivation {
-    /**
-     * Идентификатор активации пользователя
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
 
     /**
-     * Служебное поле hibernate
+     * Идентификатор акцивации пользователя
      */
-    @Version
-    private Integer version;
+    @Id
+    @Column(name = "id")
+    private Long id;
 
     /**
      * Пользователь
@@ -49,13 +39,19 @@ public class UserActivation {
     private String hash;
 
     /**
-     * Конструктор для hibernate
+     * Служебное поле hibernate
+     */
+    @Version
+    private Integer version;
+
+    /**
+     * Пустой конструктор для hibernate
      */
     public UserActivation() {
     }
 
-    public UserActivation(User user, String hash) {
-        this.user = user;
+    public UserActivation(User User, String hash) {
+        this.user = User;
         this.hash = hash;
     }
 
@@ -63,15 +59,16 @@ public class UserActivation {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getHash() {
         return hash;
+    }
+
+    public void setEmployee(User User) {
+        this.user = User;
     }
 
     public void setHash(String hash) {
         this.hash = hash;
     }
+
 }

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Office (
 --
 -- Таблица пользователей
 --
-CREATE TABLE IF NOT EXISTS User (
+CREATE TABLE IF NOT EXISTS Employee (
   id            INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
   doc_id        INT UNSIGNED NOT NULL,
   country_id    INT UNSIGNED NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS Document (
   doc_type_id INT UNSIGNED NOT NULL,
   version     INTEGER      NOT NULL,
   number      INTEGER,
-  date        DATE         NOT NULL
+  date        VARCHAR(9)   NOT NULL
 );
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS Document (
 CREATE TABLE IF NOT EXISTS Doc_Type (
   id      INTEGER      NOT NULL PRIMARY KEY AUTO_INCREMENT,
   version INTEGER      NOT NULL,
-  code    VARCHAR(3),
+  code    VARCHAR(3)   NOT NULL,
   name    VARCHAR(255) NOT NULL
 );
 
